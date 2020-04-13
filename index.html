@@ -8,6 +8,7 @@
     <body style="text-align: center;">
         <a id="i-see"><img src="button.jpg" alt="へぇ〜" width="480" height="430" /></a>
         <p><span id="count">0</span>へぇ〜 <button id="reset">リセット</button></p>
+        <p>ボリューム：<input type="range" id="volume" value="20" max="100" min="1" /></p>
         <script>
             (function () {
                 var se = new Audio();
@@ -18,6 +19,7 @@
                     var button = window.document.getElementById('i-see');
                     var countLabel = window.document.getElementById('count');
                     var reset = window.document.getElementById('reset');
+                    var volume = window.document.getElementById('volume');
                     var count = 0;
 
                     button.addEventListener('click', function (event) {
@@ -29,6 +31,9 @@
                     reset.addEventListener('click', function (event) {
                         count = 0;
                         countLabel.textContent = '0';
+                    });
+                    volume.addEventListener('change', function (event) {
+                        se.volume = parseInt(volume.value, 10) / 100;
                     });
                 };
             }());
