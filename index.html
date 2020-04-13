@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="robots" content="none" />
+        <title>Trivia Button</title>
+    </head>
+    <body style="text-align: center;">
+        <a id="i-see"><img src="button.jpg" alt="へぇ〜" width="480" height="430" /></a>
+        <p><span id="count">0</span>へぇ〜 <button id="reset">リセット</button></p>
+        <script>
+            (function () {
+                var se = new Audio();
+                se.preload = 'auto';
+                se.src = 'trivia.mp3';
+                se.load();
+                window.onload = function () {
+                    var button = window.document.getElementById('i-see');
+                    var countLabel = window.document.getElementById('count');
+                    var reset = window.document.getElementById('reset');
+                    var count = 0;
+
+                    button.addEventListener('click', function (event) {
+                        se.pause();
+                        se.currentTime = 200;
+                        se.play();
+                        countLabel.textContent = (++count).toString(10);
+                    });
+                    reset.addEventListener('click', function (event) {
+                        count = 0;
+                        countLabel.textContent = '0';
+                    });
+                };
+            }());
+        </script>
+    </body>
+</html>
