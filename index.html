@@ -11,32 +11,45 @@
         <p>ボリューム：<input type="range" id="volume" value="20" max="100" min="1" /></p>
         <script>
             (function () {
-                var se = new Audio();
-                se.preload = 'auto';
-                se.src = 'trivia.mp3';
-                se.load();
+                var seContextCount = 6;
+                var startPosition = 200;
+                var se = [];
+                for (var i = 0; i < seContextCount; i++)
+                {
+                    se[i] = new Audio();
+                    se[i].preload = 'auto';
+                    se[i].src = 'trivia.mp3';
+                    se[i].load();
+                }
                 window.onload = function () {
                     var button = window.document.getElementById('i-see');
                     var countLabel = window.document.getElementById('count');
                     var reset = window.document.getElementById('reset');
                     var volume = window.document.getElementById('volume');
                     var count = 0;
-                    se.pause();
-                    se.currentTime = 200;
-                    se.volume = parseInt(volume.value, 10) / 100;
+                    for (var j = 0; j < seContextCount; j++)
+                    {
+                        se[j].pause();
+                        se[j].currentTime = startPosition;
+                        se[j].volume = parseInt(volume.value, 10) / 100;
+                    }
 
                     button.addEventListener('click', function (event) {
-                        se.pause();
-                        se.currentTime = 200;
-                        se.play();
-                        countLabel.textContent = (++count).toString(10);
+                        var t = count++ % seContextCount;
+                        se[t].pause();
+                        se[t].currentTime = startPosition;
+                        se[t].play();
+                        countLabel.textContent = count.toString(10);
                     });
                     reset.addEventListener('click', function (event) {
                         count = 0;
                         countLabel.textContent = '0';
                     });
                     volume.addEventListener('change', function (event) {
-                        se.volume = parseInt(volume.value, 10) / 100;
+                        for (var k = 0; k < seContextCount; k++)
+                        {
+                            se[k].volume = parseInt(volume.value, 10) / 100;
+                        }
                     });
                 };
             }());
