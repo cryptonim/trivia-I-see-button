@@ -27,8 +27,7 @@
                 var seContextCount = 6;
                 var startPosition = 200;
                 var se = [];
-                for (var i = 0; i < seContextCount; i++)
-                {
+                for (var i = 0; i < seContextCount; i++) {
                     se[i] = new Audio();
                     se[i].preload = 'auto';
                     se[i].src = 'trivia.mp3';
@@ -40,28 +39,36 @@
                     var reset = window.document.getElementById('reset');
                     var volume = window.document.getElementById('volume');
                     var count = 0;
-                    for (var j = 0; j < seContextCount; j++)
-                    {
+                    for (var j = 0; j < seContextCount; j++) {
                         se[j].pause();
                         se[j].currentTime = startPosition;
                         se[j].volume = parseInt(volume.value, 10) / 100;
                     }
 
-                    button.addEventListener('click', function (event) {
+                    function playSound () {
                         var t = count++ % seContextCount;
                         se[t].pause();
                         se[t].currentTime = startPosition;
                         se[t].play();
                         countLabel.textContent = count.toString(10);
+                    }
+
+                    button.addEventListener('click', function (event) {
+                        playSound();
                     });
                     reset.addEventListener('click', function (event) {
                         count = 0;
                         countLabel.textContent = '0';
                     });
                     volume.addEventListener('change', function (event) {
-                        for (var k = 0; k < seContextCount; k++)
-                        {
+                        for (var k = 0; k < seContextCount; k++) {
                             se[k].volume = parseInt(volume.value, 10) / 100;
+                        }
+                    });
+                    window.addEventListener('keydown', function (event) {
+                        if (event.keyCode === 32) {
+                            // Space Key
+                            playSound();
                         }
                     });
                 };
